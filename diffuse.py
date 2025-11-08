@@ -313,7 +313,7 @@ if __name__ == "__main__":
     val_sampler = BucketBatchSampler(val_dataset.buckets, batch_size=8)
     val_loader = DataLoader(val_dataset, batch_sampler=val_sampler, num_workers=os.cpu_count(), pin_memory=True)
 
-    vae_path = "/scratch/e1375459/vae-epoch=98-val_loss=0.0084.ckpt"
+    vae_path = "placeholder"
     vae_model = VAE.load_from_checkpoint(vae_path).to("cuda")
     
     # scaling_factor = compute_latent_scaling_factor(vae_model, dataloader)
@@ -326,14 +326,14 @@ if __name__ == "__main__":
         use_snr_weighting=True
     )
 
-    checkpoint_path = "/scratch/e1375459/vae-epoch=14-val_loss=0.0265.ckpt"
+    # checkpoint_path = None
     
-    if os.path.exists(checkpoint_path):
-        print(f"Manually loading weights from: {checkpoint_path}")
-        ckpt = torch.load(checkpoint_path)
-        diffusion_model.load_state_dict(ckpt['state_dict'], strict=True)
-    else:
-        raise Exception("Load from what?")
+    # if os.path.exists(checkpoint_path):
+    #     print(f"Manually loading weights from: {checkpoint_path}")
+    #     ckpt = torch.load(checkpoint_path)
+    #     diffusion_model.load_state_dict(ckpt['state_dict'], strict=True)
+    # else:
+    #     raise Exception("Load from what?")
 
     trainer = l.Trainer(
         max_epochs=100,
